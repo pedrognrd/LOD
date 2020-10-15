@@ -56,7 +56,6 @@ public abstract class Enemies : MonoBehaviour
 
     public void DamageReceived(int danno)
     {
-        print("Estoy en DamageReceived(int danno)");
         health = health - danno;
         healthSlider.value = healthSlider.maxValue - health;
 
@@ -68,7 +67,6 @@ public abstract class Enemies : MonoBehaviour
 
     public void DamageReceived(int danno, Vector3 position)
     {
-        print("Estoy en DamageReceived(int danno, Vector3 position)");
         health = health - danno;
         healthSlider.value = healthSlider.maxValue - health;
 
@@ -80,10 +78,8 @@ public abstract class Enemies : MonoBehaviour
 
     protected void Dying()
     {
+        GetComponent<AudioSource>().PlayOneShot(painSound);
         GameObject explosion = Instantiate(prefabExplosion, transform.position, transform.rotation);
-        explosion.GetComponent<AudioSource>().clip = explosionSound;
-        explosion.GetComponent<AudioSource>().Play();
-        print("dying");
         Destroy(gameObject);
     }
 }

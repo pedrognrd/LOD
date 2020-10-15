@@ -8,16 +8,10 @@ public class DBGShell : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        print("en el collision");
-        print(gameObject);
-        if (gameObject.CompareTag("Skeleton1"))
+        Destroy(gameObject); 
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            print("Llamando a DamageReceived " + danyo);
-            gameObject.GetComponentInParent<Enemies>().DamageReceived(danyo);
+            collision.gameObject.GetComponentInParent<Enemies>().DamageReceived(danyo);
         }
-        else {
-            print("impacta cualquier cosa");
-        }
-        Destroy(gameObject);
     }
 }

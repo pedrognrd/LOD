@@ -125,6 +125,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69a61326436225148a9ec2272611d657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabExplosion: {fileID: 0}
-  ratioExplosion: 0
-  danyo: 50
+  danyo: 10

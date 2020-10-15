@@ -10,6 +10,8 @@ public class SpawnerSkeletons1 : MonoBehaviour
     private float timeBetweenInstances;
     [SerializeField]
     private int maxEnemies;
+    [SerializeField]
+    private GameObject summoningArea;
 
     private int enemiesCreated = 0;
     private const float MIN_ANGLE = -45;
@@ -22,8 +24,14 @@ public class SpawnerSkeletons1 : MonoBehaviour
     }
 
     void SpawnSkeletons() {
+
+        //Instantiating summoning particle effect
+        Vector3 summoningY = new Vector3(-90, 0, 0);
+        GameObject summoning = Instantiate(summoningArea, transform.position, Quaternion.Euler(summoningY));
+
         Vector3 rotation = new Vector3(0, Random.Range(MIN_ANGLE,MAX_ANGLE),0);
         Instantiate(prefabEnemy, transform.position, Quaternion.Euler(rotation));
+        
         enemiesCreated++;
         if (enemiesCreated == maxEnemies) {
             CancelInvoke();
