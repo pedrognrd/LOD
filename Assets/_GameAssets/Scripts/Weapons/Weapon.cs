@@ -21,9 +21,18 @@ public class Weapon : MonoBehaviour
     // Variable para determinar si está esperando a que pase el tiempo de cadencia
     private bool isWaiting = false;
 
+    protected GameObject enemy;
+
     private void Awake()
     {
         audioSource = GetComponentInParent<AudioSource>();
+    }
+
+    private void Update()
+    {
+        enemy = GameObject.FindGameObjectWithTag("Enemy");
+        Vector3 direccion = enemy.transform.position - transform.position;
+        Debug.DrawRay(transform.position, direccion, Color.red, 0.1f);
     }
 
     public void TryShoot()

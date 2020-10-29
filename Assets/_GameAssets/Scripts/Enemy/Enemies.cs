@@ -27,15 +27,8 @@ public abstract class Enemies : MonoBehaviour
     private int points;
     [SerializeField]
     private GameObject prefabBlood;
-    protected GameObject player;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+     // Update is called once per frame
     void Update()
     {
         Move();
