@@ -28,23 +28,41 @@ public abstract class Enemies : MonoBehaviour
     [SerializeField]
     private GameObject prefabBlood;
 
-     // Update is called once per frame
-    void Update()
+    protected GameObject player;
+    private GameObject gameManager;
+    protected bool autodestruccion = false;
+
+    protected void Start()
     {
-        Move();
+        player = GameObject.Find("Player");
     }
 
-    public void Attack() { }
+    // Update is called once per frame
+    protected virtual void Update()
+    {
+        Move();
+        float distance = DistanceToPlayer();
+        if (distance <= attackDistance)
+        {
+            //print("UPDATE DE PLAYER");
+            Attack();
+        }
+    }
 
-    public abstract void Move();
-
-    public void Detect() { }
-
-    public void DamageDone() { }
+    public abstract void Attack();
 
     protected void Blooding(Vector3 bloodPosition)
     {
         GameObject hit = Instantiate(prefabBlood, bloodPosition, transform.rotation);
+    }
+
+    protected float DistanceToPlayer()
+    {
+        print("UPDATE DE PLAYER");
+        //Vector3 vDistance = player.transform.position - transform.position;
+        //float distance = vDistance.magnitude;
+        float distance = 2;
+        return distance;
     }
 
     public void DamageReceived(int danno)
@@ -54,7 +72,7 @@ public abstract class Enemies : MonoBehaviour
 
         if (health <= 0)
         {
-            Dying();
+            Dying(autodestruccion = true);
         }
     }
 
@@ -69,10 +87,30 @@ public abstract class Enemies : MonoBehaviour
         }
     }
 
-    protected void Dying()
+    public void Detect() { }
+
+    /*protected void Dying()
     {
         GetComponent<AudioSource>().PlayOneShot(painSound);
         GameObject explosion = Instantiate(prefabExplosion, transform.position, transform.rotation);
         Destroy(gameObject);
+    }*/
+
+    protected void Dying(bool autodestruccion)
+    {
+        GetComponent<AudioSource>().PlayOneShot(painSound);
+        GameObject explosion = Instantiate(prefabExplosion, transform.position, transform.rotation);
+        //explosion.GetComponent<AudioSource>().clip = explosionSound;
+        //explosion.GetComponent<AudioSource>().Play();
+        Destroy(gameObject);
+
+        if (autodestruccion)
+        {
+            gameManager = GameObject.Find("GameManager");
+            //gameManager.GetComponent<GameManager>().IncrementarPuntuacion(points);
+        }
+
     }
+
+    public abstract void Move();
 }

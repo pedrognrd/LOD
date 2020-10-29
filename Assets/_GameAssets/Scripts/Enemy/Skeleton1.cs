@@ -11,10 +11,18 @@ public class Skeleton1 : Enemies
     [SerializeField]
     private float maxDegreeRotation;
 
+    
+
     private void Start()
     {
         // Callint to Rotate at start and every timeBetweenRotation
         InvokeRepeating("Rotate", 0, timeBetweenRotation);
+    }
+
+    public override void Attack()
+    {
+        //player.GetComponent<PlayerManager>().DamageReceived(damageDone);
+        Dying(autodestruccion = false);
     }
 
     public override void Move()

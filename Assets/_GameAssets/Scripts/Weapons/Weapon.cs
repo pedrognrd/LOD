@@ -31,8 +31,9 @@ public class Weapon : MonoBehaviour
     private void Update()
     {
         enemy = GameObject.FindGameObjectWithTag("Enemy");
-        Vector3 direccion = enemy.transform.position - transform.position;
-        Debug.DrawRay(transform.position, direccion, Color.red, 0.1f);
+        //print(enemy);
+        //Vector3 direccion = enemy.transform.position - transform.position;
+        //Debug.DrawRay(transform.position, direccion, Color.red, 0.1f);
     }
 
     public void TryShoot()

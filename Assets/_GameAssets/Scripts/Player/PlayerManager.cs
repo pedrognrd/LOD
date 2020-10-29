@@ -9,9 +9,9 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private string name;
     [SerializeField]
-    private int maxHealth;
-    [SerializeField]
     private int health;
+    [SerializeField]
+    private int maxHealth;
     [SerializeField]
     private GameObject[] weapons;
     [SerializeField]
@@ -24,6 +24,8 @@ public class PlayerManager : MonoBehaviour
     GameObject healthBar;
     [SerializeField]
     private int activeWeapon = 0;
+    [SerializeField]
+    GameObject panelMenu;
 
     private void Awake()
     {
@@ -38,7 +40,6 @@ public class PlayerManager : MonoBehaviour
             if (Input.GetKeyDown(i.ToString()))
             {
                 ActivateWeapon(i - 1);
-
             }
         }
 
@@ -68,5 +69,18 @@ public class PlayerManager : MonoBehaviour
             }
 
         }
+    }
+
+    public void DamageReceived(int danno)
+    {
+        health = health - danno;
+        if (health <= 0) { Dying(); }
+    }
+
+    public void Dying()
+    {
+        print("Died!");
+        panelMenu.SetActive(true);
+        GameObject.Find("GameManager").GetComponent<GameManager>().DoGameOver();
     }
 }

@@ -67,7 +67,7 @@ MonoBehaviour:
   health: 40
   damageDone: 5
   speed: 1
-  attackDistance: 1
+  attackDistance: 3
   healthSlider: {fileID: 6777058517876446764}
   prefabHit: {fileID: 100004, guid: f95ff734540a0d749be6571b6cb5b37f, type: 3}
   prefabExplosion: {fileID: 100004, guid: 7867af58a6ec48846ae807eb4022fbaa, type: 3}
