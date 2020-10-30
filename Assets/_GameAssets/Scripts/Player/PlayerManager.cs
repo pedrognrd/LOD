@@ -81,6 +81,6 @@ public class PlayerManager : MonoBehaviour
     {
         print("Died!");
         panelMenu.SetActive(true);
-        GameObject.Find("GameManager").GetComponent<GameManager>().DoGameOver();
+       // GameObject.Find("GameManager").GetComponent<GameManager>().DoGameOver();
     }
 }

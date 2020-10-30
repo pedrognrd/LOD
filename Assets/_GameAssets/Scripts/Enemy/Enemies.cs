@@ -41,12 +41,11 @@ public abstract class Enemies : MonoBehaviour
     protected virtual void Update()
     {
         Move();
-        float distance = DistanceToPlayer();
-        if (distance <= attackDistance)
+        //float distance = DistanceToPlayer();
+       /*if (distance <= attackDistance)
         {
-            //print("UPDATE DE PLAYER");
             Attack();
-        }
+        }*/
     }
 
     public abstract void Attack();
@@ -56,14 +55,14 @@ public abstract class Enemies : MonoBehaviour
         GameObject hit = Instantiate(prefabBlood, bloodPosition, transform.rotation);
     }
 
-    protected float DistanceToPlayer()
+    /*protected float DistanceToPlayer()
     {
-        print("UPDATE DE PLAYER");
+        //print("UPDATE DE PLAYER");
         //Vector3 vDistance = player.transform.position - transform.position;
         //float distance = vDistance.magnitude;
-        float distance = 2;
-        return distance;
-    }
+        //float distance = 2;
+        //return distance;
+    }*/
 
     public void DamageReceived(int danno)
     {
