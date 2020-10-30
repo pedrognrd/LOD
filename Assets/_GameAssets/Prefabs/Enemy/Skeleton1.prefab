@@ -75,6 +75,7 @@ MonoBehaviour:
   painSound: {fileID: 8300000, guid: e66b136e063cc4049b96679b13228187, type: 3}
   points: 20
   prefabBlood: {fileID: 100000, guid: bc98890f6028f444eaa7789bde5e2eeb, type: 3}
+  gameManager: {fileID: 4262978869952316556, guid: 26a6e9c175fbd0b4c9d90e8d43b3388e, type: 3}
   timeBetweenRotation: 4
   minDegreeRotation: -180
   maxDegreeRotation: 180
@@ -5407,8 +5408,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 2.7152405, z: 1}
-  m_Center: {x: 0, y: 1.3181763, z: 0}
+  m_Size: {x: 1.4038849, y: 2.7152405, z: 1.4931335}
+  m_Center: {x: 0.024467468, y: 1.3181763, z: -0.06300354}
 --- !u!1 &7923370772681735685
 GameObject:
   m_ObjectHideFlags: 0

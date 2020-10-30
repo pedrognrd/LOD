@@ -27,9 +27,10 @@ public abstract class Enemies : MonoBehaviour
     private int points;
     [SerializeField]
     private GameObject prefabBlood;
+    [SerializeField]
+    private GameObject gameManager;
 
     protected GameObject player;
-    private GameObject gameManager;
     protected bool autodestruccion = false;
 
     protected void Start()
@@ -97,7 +98,7 @@ public abstract class Enemies : MonoBehaviour
 
     protected void Dying(bool autodestruccion)
     {
-        GetComponent<AudioSource>().PlayOneShot(painSound);
+        gameManager.GetComponent<AudioSource>().PlayOneShot(painSound);
         GameObject explosion = Instantiate(prefabExplosion, transform.position, transform.rotation);
         //explosion.GetComponent<AudioSource>().clip = explosionSound;
         //explosion.GetComponent<AudioSource>().Play();
