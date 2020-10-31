@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Enemies : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     [SerializeField]
     private int health;
@@ -27,13 +27,12 @@ public abstract class Enemies : MonoBehaviour
     private int points;
     [SerializeField]
     private GameObject prefabBlood;
-    [SerializeField]
-    private GameObject gameManager;
-
     protected GameObject player;
+    private GameObject gameManager;
     protected bool autodestruccion = false;
 
-    protected void Start()
+    // Start is called before the first frame update
+    protected void Awake()
     {
         player = GameObject.Find("Player");
     }
@@ -42,31 +41,21 @@ public abstract class Enemies : MonoBehaviour
     protected virtual void Update()
     {
         Move();
-        //float distance = DistanceToPlayer();
-       /*if (distance <= attackDistance)
+        float distance = DistanceToPlayer();
+        if (distance <= attackDistance)
         {
             Attack();
-        }*/
+        }
     }
-
-    public abstract void Attack();
 
     protected void Blooding(Vector3 bloodPosition)
     {
         GameObject hit = Instantiate(prefabBlood, bloodPosition, transform.rotation);
     }
 
-    /*protected float DistanceToPlayer()
-    {
-        //print("UPDATE DE PLAYER");
-        //Vector3 vDistance = player.transform.position - transform.position;
-        //float distance = vDistance.magnitude;
-        //float distance = 2;
-        //return distance;
-    }*/
-
     public void DamageReceived(int danno)
     {
+        GetComponent<AudioSource>().PlayOneShot(painSound);
         health = health - danno;
         healthSlider.value = healthSlider.maxValue - health;
 
@@ -75,42 +64,41 @@ public abstract class Enemies : MonoBehaviour
             Dying(autodestruccion = true);
         }
     }
-
     public void DamageReceived(int danno, Vector3 position)
     {
         health = health - danno;
         healthSlider.value = healthSlider.maxValue - health;
-
         if (health > 0)
         {
             Blooding(position);
         }
     }
 
-    public void Detect() { }
-
-    /*protected void Dying()
+    protected float DistanceToPlayer()
     {
-        GetComponent<AudioSource>().PlayOneShot(painSound);
-        GameObject explosion = Instantiate(prefabExplosion, transform.position, transform.rotation);
-        Destroy(gameObject);
-    }*/
+        // transform.position --> posición del enemigo
+        // --> posición del player
+        // Calcular distancia
+        Vector3 vDistance = player.transform.position - transform.position;
+        float distance = vDistance.magnitude;
+        return distance;
+    }
 
     protected void Dying(bool autodestruccion)
     {
-        gameManager.GetComponent<AudioSource>().PlayOneShot(painSound);
         GameObject explosion = Instantiate(prefabExplosion, transform.position, transform.rotation);
-        //explosion.GetComponent<AudioSource>().clip = explosionSound;
-        //explosion.GetComponent<AudioSource>().Play();
+        explosion.GetComponent<AudioSource>().clip = explosionSound;
+        explosion.GetComponent<AudioSource>().Play();
         Destroy(gameObject);
 
         if (autodestruccion)
         {
             gameManager = GameObject.Find("GameManager");
-            //gameManager.GetComponent<GameManager>().IncrementarPuntuacion(points);
+            gameManager.GetComponent<GameManager>().IncrementarPuntuacion(points);
         }
-
     }
 
+    // Abstract methods
+    public abstract void Attack();
     public abstract void Move();
 }

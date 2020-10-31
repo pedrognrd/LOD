@@ -11,21 +11,21 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private int health;
     [SerializeField]
-    private int maxHealth;
+    private Slider healthSlider;
     [SerializeField]
-    private GameObject[] weapons;
+    private int maxHealth;
     [SerializeField]
     private int score;
     [SerializeField]
-    private bool shield;
-    [SerializeField]
     private bool key;
     [SerializeField]
-    GameObject healthBar;
+    private bool shield;
     [SerializeField]
     private int activeWeapon = 0;
     [SerializeField]
     GameObject panelMenu;
+    [SerializeField]
+    private GameObject[] weapons;
 
     private void Awake()
     {
@@ -76,6 +76,16 @@ public class PlayerManager : MonoBehaviour
         health = health - danno;
         if (health <= 0) { Dying(); }
     }
+
+    /*public void DamageReceived(int danno,)
+    {
+        health = health - danno;
+        healthSlider.value = healthSlider.maxValue - health;
+        if (health > 0)
+        {
+            Blooding(position);
+        }
+    }*/
 
     public void Dying()
     {

@@ -7,7 +7,7 @@ public class DoubleBarrelGun : Weapon
     public float force;
     public GameObject prefabProyectil;
     public Transform transformSpawner;
-    private int damageDone = 50;
+    private int damageDone = 25;
 
     /*public override void Shoot()
     {
@@ -33,7 +33,7 @@ public class DoubleBarrelGun : Weapon
             // Enra si choca contra algo
             if (hit.transform.gameObject.CompareTag("Enemy"))
             {
-                hit.transform.gameObject.GetComponentInParent<Enemies>().DamageReceived(damageDone);
+                hit.transform.gameObject.GetComponentInParent<Enemy>().DamageReceived(damageDone);
             }
         }
     }
