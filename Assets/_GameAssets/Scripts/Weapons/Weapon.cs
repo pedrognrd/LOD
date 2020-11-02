@@ -8,20 +8,20 @@ public class Weapon : MonoBehaviour
     public AudioClip acShoot;
     public AudioClip acReload;
     public AudioClip acStuck;
-
-    public float cadency; // determina cada cuanto tiempo podemos disparar
-    public int maxAmmoByCharger;
-    public int maxCharger;
-    public int ammo; // munición en el cargador del arma
-    public int chargers; // cargadores extras en reserva
-
+    // Munición en el cargador del arma
+    public int ammo; 
     //Accedemos al Audio Source de Arsenal
     public AudioSource audioSource;
-
+    // Determina cada cuanto tiempo podemos disparar
+    public float cadency;
+    // Cargadores extras en reserva
+    public int chargers; 
+    protected GameObject enemy; 
     // Variable para determinar si está esperando a que pase el tiempo de cadencia
     private bool isWaiting = false;
-
-    protected GameObject enemy;
+    public int maxAmmoByCharger;
+    public int maxCharger;
+    //public Text textChargers;
 
     private void Awake()
     {
@@ -48,14 +48,16 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    // Definimos el método de recarga
-    public void Reload()
+    /*private void RefreshUI()
+    {
+        textChargers.text = "x" + chargers.ToString();
+    }*/
+    public virtual void Reload()
     {
         if (chargers > 0)
         {
             PlayReloadSound();
-            ammo = maxAmmoByCharger;
-            chargers--;
+            //RefreshUI();
         }
     }
 

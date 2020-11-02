@@ -1,21 +1,34 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DoubleBarrelGun : Weapon
 {
-    public float force;
-    public GameObject prefabProyectil;
-    public Transform transformSpawner;
     private int damageDone = 25;
+    public GameObject prefabProyectil;
+    [SerializeField]
+    public GameObject[] shells;
+    //public Transform transformSpawner;
 
-    /*public override void Shoot()
+    private void Start()
     {
-        base.Shoot();
-        GameObject proyectil = Instantiate(prefabProyectil, transformSpawner.position, transformSpawner.rotation);
-        proyectil.GetComponent<Rigidbody>().AddForce(transformSpawner.forward * force);
-    }*/
+        GameObject.Find("Reload").GetComponent<Text>().text = "x" + chargers.ToString();
+    }
 
+    public void ActivateShells()
+    {
+        print("estoy en ActivateShells");
+        print("maxAmmoByCharger " + maxAmmoByCharger);
+
+        for (int i = 0; i < shells.Length; i++)
+        {
+            if (i <= maxAmmoByCharger)
+            {
+                shells[i].SetActive(true);
+            }
+        }
+    }
     public override void Shoot()
     {
         base.Shoot();
@@ -27,7 +40,6 @@ public class DoubleBarrelGun : Weapon
         Vector3 direccion = Camera.main.transform.forward;
 
         // Lanzamos el raycast
-        // "out" indica que la variable "hit", se modificará cuando el Raycast impacto contra algo
         if (Physics.Raycast(origen, direccion, out hit))
         {
             // Enra si choca contra algo
@@ -36,6 +48,28 @@ public class DoubleBarrelGun : Weapon
                 hit.transform.gameObject.GetComponentInParent<Enemy>().DamageReceived(damageDone);
             }
         }
+
+        CurrentShells();
     }
 
+    public void CurrentShells()
+    {
+        if (chargers >= 0)
+        {
+            GameObject.Find("Shell" + (ammo + 1)).SetActive(false);
+        }
+        
+    }
+
+    public override void Reload()
+    {
+        base.Reload();
+        if (chargers > 0)
+        {
+            ammo = maxAmmoByCharger;
+            chargers--;
+            ActivateShells();
+            GameObject.Find("Reload").GetComponent<Text>().text = "x" + chargers.ToString();
+        }
+    }
 }

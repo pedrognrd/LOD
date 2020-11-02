@@ -11,7 +11,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private int health;
     [SerializeField]
-    private Slider healthSlider;
+    private GameObject healthSlider;
     [SerializeField]
     private int maxHealth;
     [SerializeField]
@@ -25,7 +25,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     GameObject panelMenu;
     [SerializeField]
-    private GameObject[] weapons;
+    public GameObject[] weapons;
 
     private void Awake()
     {
@@ -52,6 +52,14 @@ public class PlayerManager : MonoBehaviour
         {
             weapons[activeWeapon].GetComponent<Weapon>().Reload();
         }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            GameObject.Find("Shell1").SetActive(false);
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            GameObject.Find("Shell1").SetActive(true);
+        }
     }
 
     public void ActivateWeapon(int idWeapon)
@@ -71,9 +79,11 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+
     public void DamageReceived(int danno)
     {
         health = health - danno;
+        healthSlider.GetComponent<Image>().fillAmount = health / ((float)maxHealth);
         if (health <= 0) { Dying(); }
     }
 
