@@ -4,27 +4,43 @@ using UnityEngine;
 
 public class Skeleton1 : Enemy
 {
+    public Animator animator; 
+    private float currentSpeed;
     [SerializeField]
-    private float timeBetweenRotation;
+    private int increaseSpeed;
+    private float lastSpeed;
+    [SerializeField]
+    private float maxDegreeRotation;
     [SerializeField]
     private float minDegreeRotation;
     [SerializeField]
-    private float maxDegreeRotation;
+    private float timeBetweenRotation;
+    
 
     private void Start()
     {
+        lastSpeed = speed;
         // Calling to Rotate at start and every timeBetweenRotation
         InvokeRepeating("Rotate", 0, timeBetweenRotation);
     }
 
     public override void Attack()
     {
+        // Medir si ha habido una colisión entre la espada y el player para que inflinja daño
         player.GetComponent<PlayerManager>().DamageReceived(damageDone);
-        Dying(autodestruccion = false);
+        //Dying(autodestruccion = false);
     }
 
     public override void Move()
     {
+        // Posición del player con la Y del enemigo. Para evitar que el enemigo se incline al estar muy cerca del player
+        Vector3 target = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
+        
+        if (DistanceToPlayer() <= followingDistance)
+        {
+            transform.LookAt(target);
+            currentSpeed = speed * increaseSpeed;
+        }
         transform.Translate(Vector3.forward * Time.deltaTime * speed);
     }
 

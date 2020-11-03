@@ -6,30 +6,32 @@ using UnityEngine.UI;
 public abstract class Enemy : MonoBehaviour
 {
     [SerializeField]
-    private int health;
+    protected float attackDistance; 
+    protected bool autodestruccion = false;
     [SerializeField]
     protected int damageDone;
     [SerializeField]
-    protected float speed;
+    private AudioClip explosionSound;
     [SerializeField]
-    private float attackDistance;
+    protected float followingDistance;
+    private GameObject gameManager;
+    [SerializeField]
+    private int health;
     [SerializeField]
     private Slider healthSlider;
+    [SerializeField]
+    private AudioClip painSound;
+    protected GameObject player;
+    [SerializeField]
+    private int points;
+    [SerializeField]
+    private GameObject prefabBlood;
     [SerializeField]
     private GameObject prefabHit;
     [SerializeField]
     private GameObject prefabExplosion;
     [SerializeField]
-    private AudioClip explosionSound;
-    [SerializeField]
-    private AudioClip painSound;
-    [SerializeField]
-    private int points;
-    [SerializeField]
-    private GameObject prefabBlood;
-    protected GameObject player;
-    private GameObject gameManager;
-    protected bool autodestruccion = false;
+    protected float speed;
 
     // Start is called before the first frame update
     protected void Awake()

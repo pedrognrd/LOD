@@ -7,25 +7,26 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField]
-    private string name;
+    private int activeWeapon = 0;
     [SerializeField]
     private int health;
     [SerializeField]
     private GameObject healthSlider;
     [SerializeField]
+    private bool key;
+    [SerializeField]
     private int maxHealth;
     [SerializeField]
-    private int score;
-    [SerializeField]
-    private bool key;
+    private string name;
     [SerializeField]
     private bool shield;
     [SerializeField]
-    private int activeWeapon = 0;
-    [SerializeField]
-    GameObject panelMenu;
+    private int score;
     [SerializeField]
     public GameObject[] weapons;
+
+    //[SerializeField]
+    //GameObject panelMenu;
 
     private void Awake()
     {
@@ -99,8 +100,8 @@ public class PlayerManager : MonoBehaviour
 
     public void Dying()
     {
-        print("Died!");
-        panelMenu.SetActive(true);
+        //print("Died!");
+        //panelMenu.SetActive(true);
        // GameObject.Find("GameManager").GetComponent<GameManager>().DoGameOver();
     }
 }
