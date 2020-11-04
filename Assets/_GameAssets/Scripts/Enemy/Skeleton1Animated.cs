@@ -27,13 +27,15 @@ public class Skeleton1Animated : Skeleton1
             // Se acerca hasta detenerse y comienza a atacar
             animator.SetBool("Iddle", true);
             animator.SetTrigger("AttackTrigger");
-        } else 
+        }
+
+        if (DistanceToPlayer() > attackDistance)
         {
             // Recuperamos la velocidad inicial
             speed = lastSpeed;
             // Deja de atacar y comienza a andar
             animator.ResetTrigger("AttackTrigger"); 
-            animator.SetBool("Iddle", false); 
+            animator.SetBool("Iddle", false);
         }
 
     }

@@ -11,16 +11,14 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject textScore;
     //public enum Estado { Jugando, EnInventario, EnMenu, GameOver, Finalizacion }
-    public enum Estado { Jugando, Pausado, GameOver }
-    private static Estado estado = Estado.Jugando;
+    public enum State { Playing, Paused, GameOver }
+    private static State state = State.Playing;
 
-    private int puntuacion = 0;
-    public int Puntuacion { get => puntuacion; set => puntuacion = value; }
+    private int score = 0;
+    public int Scxore { get => score; set => score = value; }
 
     [SerializeField]
     private Text textPause;
-    [SerializeField]
-    private Text textoGameOver;
     [SerializeField]
     private GameObject panelMenu;
 
@@ -52,34 +50,32 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (textPause == null)
-        {
+        if (textPause == null) {
             // Capturamos las referencias de las variablesa
             textPause = GameObject.Find("TextPause").GetComponent<Text>();
-            textoGameOver = GameObject.Find("TextGameOver").GetComponent<Text>();
             panelMenu = GameObject.Find("PanelMenu");
             panelMenu.SetActive(false);
         }
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            if (estado == Estado.Jugando)
+            if (state == State.Playing)
             {
-                Pausarjuego();
+                PauseGame();
             }
-            else if (estado == Estado.Pausado)
+            else if (state == State.Paused)
             {
-                Despausarjuego();
+                UnpauseGame();
             }
         }
     }
 
-    public static void CargarEscena(string nombreEscena)
+    public static void CargarEscena(string nombreEscena) 
     {
         SceneManager.LoadScene(nombreEscena);
     }
 
-    public void DoGameOver()
+    public void DoGameOver() 
     {
         /*
          *  - Paramos todo
@@ -88,11 +84,9 @@ public class GameManager : MonoBehaviour
         */
 
         // Cambiamos el estado
-        estado = Estado.GameOver;
+        state = State.GameOver;
         // Poner time scale en 0 y desactivar scripts del player
-        DetenerJuego();
-        // Mostrar texto game over
-        textoGameOver.enabled = true;
+        StopGame();
         // Activar el menú
         panelMenu.SetActive(true);
         // Desbloqueamos el cursor del ratón
@@ -100,34 +94,33 @@ public class GameManager : MonoBehaviour
         Cursor.visible = true;
     }
 
-    private void DetenerJuego()
+    private void StopGame()
     {
         Time.timeScale = 0;
         player.GetComponent<PlayerManager>().enabled = false;
         player.GetComponent<FirstPersonController>().enabled = false;
     }
 
-    private void Pausarjuego()
+    private void PauseGame()
     {
-        estado = Estado.Pausado;
-        DetenerJuego();
+        state = State.Paused;
+        StopGame();
         textPause.enabled = true;
-        IncrementarPuntuacion(100);
     }
 
 
-    private void Despausarjuego()
+    private void UnpauseGame()
     {
-        estado = Estado.Jugando;
+        state = State.Playing;
         Time.timeScale = 1;
         player.GetComponent<PlayerManager>().enabled = true;
         player.GetComponent<FirstPersonController>().enabled = true;
         textPause.enabled = false;
     }
 
-    public void IncrementarPuntuacion(int puntos)
+    public void UpdateScore(int puntos)
     {
-        puntuacion = puntuacion + puntos;
-        textScore.GetComponent<Text>().text = puntuacion.ToString();
+        score = score + puntos;
+        textScore.GetComponent<Text>().text = score.ToString();
     }
 }

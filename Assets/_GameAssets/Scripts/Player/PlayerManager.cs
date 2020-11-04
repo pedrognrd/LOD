@@ -7,101 +7,163 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField]
-    private int activeWeapon = 0;
+    private string name;
     [SerializeField]
     private int health;
     [SerializeField]
-    private GameObject healthSlider;
-    [SerializeField]
-    private bool key;
-    [SerializeField]
     private int maxHealth;
     [SerializeField]
-    private string name;
-    [SerializeField]
-    private bool shield;
+    private GameObject[] weapons;
     [SerializeField]
     private int score;
     [SerializeField]
-    public GameObject[] weapons;
+    private bool shield;
+    [SerializeField]
+    GameObject healthBar;
+    [SerializeField]
+    private int activeWeapon = 0;
+    [SerializeField]
+    public Text textChargers;
+    [SerializeField]
+    private GameObject[] IconWeapons;
+    [SerializeField]
+    private int activeIconWeapon = 0;
+    [SerializeField]
+    private Image bloodImage;
+    [SerializeField] 
+    GameObject panelMenu;
 
-    //[SerializeField]
-    //GameObject panelMenu;
+    private static PlayerManager _instance;
 
     private void Awake()
     {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
         health = maxHealth;
+        ActivarArma(activeWeapon);
     }
-    // Start is called before the first frame update
+
     private void Update()
     {
-        //Weapon selection
-        for (int i = 1; i <= weapons.Length; i++)
+        ChooseWeapon();
+        Shoot();
+        Recharge();
+    }
+
+
+    public void ChooseWeapon() {
+        for (int i = 0; i <= weapons.Length; i++)
         {
             if (Input.GetKeyDown(i.ToString()))
             {
-                ActivateWeapon(i - 1);
+                ActivarArma(i - 1);
             }
         }
-
-        //Shooting
+    }
+    public void Shoot()
+    {
         if (Input.GetButtonDown("Fire1"))
         {
             weapons[activeWeapon].GetComponent<Weapon>().TryShoot();
         }
+    }
+
+    public void Recharge() 
+    {
         if (Input.GetKeyDown(KeyCode.R))
         {
             weapons[activeWeapon].GetComponent<Weapon>().Reload();
         }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            GameObject.Find("Shell1").SetActive(false);
-        }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            GameObject.Find("Shell1").SetActive(true);
-        }
     }
 
-    public void ActivateWeapon(int idWeapon)
+    public void Dying()
     {
-        for (int i = 0; i < weapons.Length; i++)
-        {
-            if (i == idWeapon)
-            {
-                weapons[i].SetActive(true);
-                activeWeapon = i;
-            }
-            else
-            {
-                weapons[i].SetActive(false);
-            }
-
-        }
+        panelMenu.SetActive(true);
+        GameObject.Find("GameManager").GetComponent<GameManager>().DoGameOver();
     }
-
 
     public void DamageReceived(int danno)
     {
         health = health - danno;
-        healthSlider.GetComponent<Image>().fillAmount = health / ((float)maxHealth);
+        UpdateHealthBarAndBloodCanvas();
         if (health <= 0) { Dying(); }
     }
 
-    /*public void DamageReceived(int danno,)
+    private void UpdateHealthBarAndBloodCanvas()
     {
-        health = health - danno;
-        healthSlider.value = healthSlider.maxValue - health;
-        if (health > 0)
-        {
-            Blooding(position);
-        }
-    }*/
+        healthBar.GetComponent<Image>().fillAmount = health / ((float)maxHealth);
 
-    public void Dying()
+        /*Color colorBlood = bloodImage.color;
+        colorBlood.a = 1 - (health / ((float)maxHealth));
+        bloodImage.color = colorBlood;*/
+    }
+
+    // DONE: Desaparece del terreno, se activa en la UI
+    // TODO: guardo estado, permite abrir la puerta, realiza sonido y partículas al cogerla
+    private void OnTriggerEnter(Collider other)
     {
-        //print("Died!");
-        //panelMenu.SetActive(true);
-       // GameObject.Find("GameManager").GetComponent<GameManager>().DoGameOver();
+        /*if (other.gameObject.CompareTag("Key"))
+        {
+            Destroy(other.gameObject);
+            GameObject.Find("ImageKey").GetComponent<Image>().color = Color.yellow;
+            GameManager.hasKey = true;
+        }
+
+        if (other.gameObject.CompareTag("Cargador"))
+        {
+            int nc = other.gameObject.GetComponentInParent<CargadorGenerico>().numeroCargadores;
+            weapons[activeWeapon].GetComponent<Weapon>().AgregarCargadores(nc);
+            Destroy(other.gameObject);
+        }*/
+    }
+
+    
+    public void ActivarArma(int idArma)
+    {
+        for (int i=0; i<weapons.Length; i++) {
+            if (i == idArma)
+            {
+                weapons[i].SetActive(true);
+                IconWeapons[i].SetActive(true);
+                activeWeapon = i;
+                activeIconWeapon = i;
+
+                int chargers = weapons[i].GetComponent<Weapon>().chargers;
+                int bullets = weapons[i].GetComponent<Weapon>().ammo;
+
+                textChargers.text = "x" + chargers.ToString();
+                //TextAmmo.text = bullets.ToString();
+            }
+            else {
+                weapons[i].SetActive(false);
+                IconWeapons[i].SetActive(false);
+            } 
+        }
+    }
+
+    public bool TieneSaludATope() {
+        if (health >= maxHealth)
+        {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public void RecuperarSalud(int incSalud)
+    {
+        health += incSalud;
+        // Con esto controlamos que la salud no crezca por encima de maxHealth
+        health = Mathf.Min(health, maxHealth);
+        UpdateHealthBarAndBloodCanvas();
     }
 }

@@ -96,7 +96,7 @@ public abstract class Enemy : MonoBehaviour
         if (autodestruccion)
         {
             gameManager = GameObject.Find("GameManager");
-            //gameManager.GetComponent<GameManager>().IncrementarPuntuacion(points);
+            gameManager.GetComponent<GameManager>().UpdateScore(points);
         }
     }
 

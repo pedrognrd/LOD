@@ -10,8 +10,7 @@ public class Lantern : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
+        if (Input.GetKeyDown(KeyCode.L)) {
             lantern.enabled = !lantern.enabled;
         }
 

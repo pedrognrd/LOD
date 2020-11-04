@@ -66,8 +66,6 @@ public class DoubleBarrelGun : Weapon
         base.Reload();
         if (chargers > 0)
         {
-            ammo = maxAmmoByCharger;
-            chargers--;
             ActivateShells();
             GameObject.Find("Reload").GetComponent<Text>().text = "x" + chargers.ToString();
         }

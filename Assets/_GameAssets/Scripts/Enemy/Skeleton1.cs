@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build;
 using UnityEngine;
 
 public class Skeleton1 : Enemy
@@ -8,26 +9,36 @@ public class Skeleton1 : Enemy
     private float currentSpeed;
     [SerializeField]
     private int increaseSpeed;
-    private float lastSpeed;
+    //private float lastSpeed;
     [SerializeField]
     private float maxDegreeRotation;
     [SerializeField]
     private float minDegreeRotation;
     [SerializeField]
     private float timeBetweenRotation;
+    [SerializeField]
+    GameObject skeletonSword;
     
 
     private void Start()
     {
-        lastSpeed = speed;
+        //lastSpeed = speed;
         // Calling to Rotate at start and every timeBetweenRotation
+
         InvokeRepeating("Rotate", 0, timeBetweenRotation);
     }
 
     public override void Attack()
     {
+        if (skeletonSword.GetComponent<Skeleton1Sword>().canAttack) 
+        {
+            print("damageDone " + damageDone);
+            player.GetComponent<PlayerManager>().DamageReceived(damageDone);
+        }
         // Medir si ha habido una colisión entre la espada y el player para que inflinja daño
-        player.GetComponent<PlayerManager>().DamageReceived(damageDone);
+        
+
+        
         //Dying(autodestruccion = false);
     }
 
@@ -39,7 +50,7 @@ public class Skeleton1 : Enemy
         if (DistanceToPlayer() <= followingDistance)
         {
             transform.LookAt(target);
-            currentSpeed = speed * increaseSpeed;
+            //currentSpeed = speed * increaseSpeed;
         }
         transform.Translate(Vector3.forward * Time.deltaTime * speed);
     }
