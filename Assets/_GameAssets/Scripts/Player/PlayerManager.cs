@@ -48,7 +48,7 @@ public class PlayerManager : MonoBehaviour
         }
 
         health = maxHealth;
-        ActivarArma(activeWeapon);
+        ActivateWeapon(activeWeapon);
     }
 
     private void Update()
@@ -58,16 +58,34 @@ public class PlayerManager : MonoBehaviour
         Recharge();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        /*if (other.gameObject.CompareTag("Key"))
+        {
+            Destroy(other.gameObject);
+            GameObject.Find("ImageKey").GetComponent<Image>().color = Color.yellow;
+            GameManager.hasKey = true;
+        }*/
+
+        print(other.gameObject.tag);
+        if (other.gameObject.CompareTag("Charger"))
+        {
+            int nc = other.gameObject.GetComponentInParent<GenericCharger>().numberChargers;
+            weapons[activeWeapon].GetComponent<Weapon>().AddChargers(nc);
+            Destroy(other.gameObject);
+        }
+    }
 
     public void ChooseWeapon() {
         for (int i = 0; i <= weapons.Length; i++)
         {
             if (Input.GetKeyDown(i.ToString()))
             {
-                ActivarArma(i - 1);
+                ActivateWeapon(i - 1);
             }
         }
     }
+
     public void Shoot()
     {
         if (Input.GetButtonDown("Fire1"))
@@ -106,27 +124,7 @@ public class PlayerManager : MonoBehaviour
         bloodImage.color = colorBlood;*/
     }
 
-    // DONE: Desaparece del terreno, se activa en la UI
-    // TODO: guardo estado, permite abrir la puerta, realiza sonido y partículas al cogerla
-    private void OnTriggerEnter(Collider other)
-    {
-        /*if (other.gameObject.CompareTag("Key"))
-        {
-            Destroy(other.gameObject);
-            GameObject.Find("ImageKey").GetComponent<Image>().color = Color.yellow;
-            GameManager.hasKey = true;
-        }
-
-        if (other.gameObject.CompareTag("Cargador"))
-        {
-            int nc = other.gameObject.GetComponentInParent<CargadorGenerico>().numeroCargadores;
-            weapons[activeWeapon].GetComponent<Weapon>().AgregarCargadores(nc);
-            Destroy(other.gameObject);
-        }*/
-    }
-
-    
-    public void ActivarArma(int idArma)
+    public void ActivateWeapon(int idArma)
     {
         for (int i=0; i<weapons.Length; i++) {
             if (i == idArma)
@@ -149,7 +147,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public bool TieneSaludATope() {
+    public bool HealthAtMax() {
         if (health >= maxHealth)
         {
             return true;
@@ -159,9 +157,9 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void RecuperarSalud(int incSalud)
+    public void HealthRecovery(int incHealth)
     {
-        health += incSalud;
+        health += incHealth;
         // Con esto controlamos que la salud no crezca por encima de maxHealth
         health = Mathf.Min(health, maxHealth);
         UpdateHealthBarAndBloodCanvas();

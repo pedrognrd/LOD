@@ -32,13 +32,8 @@ public class Skeleton1 : Enemy
     {
         if (skeletonSword.GetComponent<Skeleton1Sword>().canAttack) 
         {
-            print("damageDone " + damageDone);
             player.GetComponent<PlayerManager>().DamageReceived(damageDone);
         }
-        // Medir si ha habido una colisión entre la espada y el player para que inflinja daño
-        
-
-        
         //Dying(autodestruccion = false);
     }
 

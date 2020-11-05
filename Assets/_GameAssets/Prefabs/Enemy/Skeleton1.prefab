@@ -5373,19 +5373,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canAttack: 0
---- !u!65 &651687658
-BoxCollider:
+--- !u!136 &644515794
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7921487485325343934}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 87d047a999ad14247b25acf27e712ae5, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.4038849, y: 2.6244125, z: 1.4931335}
-  m_Center: {x: 0.024467468, y: 1.3635902, z: -0.06300354}
+  m_Radius: 0.5
+  m_Height: 2.6088943
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.319767, z: 0}
 --- !u!1 &7923370772681735685
 GameObject:
   m_ObjectHideFlags: 0

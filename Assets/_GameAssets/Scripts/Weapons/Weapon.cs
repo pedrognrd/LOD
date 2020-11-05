@@ -35,11 +35,14 @@ public class Weapon : MonoBehaviour
         audioSource = GetComponentInParent<AudioSource>();
     }
 
-    public void AgregarCargadores(int nc) 
+    public void AddChargers(int nc) 
     {
+        print("numero chargers " + nc);
         chargers += nc;
+        print("numero chargers " + chargers);
         // Definimos un umbral de valores y recogemos el menor
         chargers = Mathf.Min(chargers, maxCharger);
+        GameObject.Find("Reload").GetComponent<Text>().text = "x" + chargers.ToString();
     }
 
     public void TryShoot()
@@ -80,6 +83,7 @@ public class Weapon : MonoBehaviour
     // Actualizamos el HUD
     private void RefreshUI()
     {
+        GameObject.Find("Reload").GetComponent<Text>().text = "x" + chargers.ToString();
         //textAmmo.text = ammo.ToString();
         //textChargers.text = "x" + chargers.ToString();
     }

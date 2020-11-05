@@ -18,9 +18,6 @@ public class DoubleBarrelGun : Weapon
 
     public void ActivateShells()
     {
-        print("estoy en ActivateShells");
-        print("maxAmmoByCharger " + maxAmmoByCharger);
-
         for (int i = 0; i < shells.Length; i++)
         {
             if (i <= maxAmmoByCharger)

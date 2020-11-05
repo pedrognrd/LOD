@@ -36,9 +36,9 @@ public class HealthArea : MonoBehaviour
     }
     IEnumerator CargarSalud() 
     {
-        while (!pm.TieneSaludATope()) 
+        while (!pm.HealthAtMax()) 
         {
-            pm.RecuperarSalud(aportacionSalud);
+            pm.HealthRecovery(aportacionSalud);
             yield return new WaitForSeconds(tiempoEspera); // con demora
             // yield return new sin demora
         }
