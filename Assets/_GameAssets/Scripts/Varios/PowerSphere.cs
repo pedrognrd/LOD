@@ -17,8 +17,6 @@ public class PowerSphere : MonoBehaviour
     {
         if (other.gameObject.name == "Player")
         {
-            print("entra player");
-            //Comienza la carga
             StartCoroutine("CargarSalud");
         }
     }
@@ -27,8 +25,6 @@ public class PowerSphere : MonoBehaviour
     {
         if (other.gameObject.name == "Player")
         {
-            print("sale player");
-            //Detiene la carga
             StopAllCoroutines();
         }
     }

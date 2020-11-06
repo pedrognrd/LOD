@@ -5,16 +5,26 @@ using UnityEngine.SceneManagement;
 
 public class GameMenu : MonoBehaviour
 {
+    // TODO Tal vez hay que destruir el sound manager también.
+    string[] objectsToDestroy = { "CanvasHUD", "GameManager", "Player" };
     public void RecargarEscena() 
     {
-        Destroy(GameObject.Find("CanvasHUD")); 
-        Destroy(GameObject.Find("GameManager"));
-        Destroy(GameObject.Find("Player"));
+        DestroyObjects();
         SceneManager.LoadScene("Scene1");
     }
 
     public void RecargarMenu()
     {
+        DestroyObjects();
         SceneManager.LoadScene("IntroScene");
+    }
+
+    private void DestroyObjects() 
+    {
+        foreach (string objectToDestroy in objectsToDestroy) 
+        {
+            GameObject objectTD = GameObject.Find(objectToDestroy);
+            Destroy(objectTD);
+        }
     }
 }

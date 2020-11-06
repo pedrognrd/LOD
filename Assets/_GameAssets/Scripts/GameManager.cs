@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        state = State.Playing;
         // Patron singleton
         if (_instance == null)
         {
@@ -43,7 +44,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        DontDestroyOnLoad(this.gameObject);
         player = GameObject.Find("Player");
         Time.timeScale = 1;
     }
@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         if (textPause == null) {
-            // Capturamos las referencias de las variablesa
+            // Capturamos las referencias de las variables
             textPause = GameObject.Find("TextPause").GetComponent<Text>();
             panelMenu = GameObject.Find("PanelMenu");
             panelMenu.SetActive(false);
@@ -97,8 +97,10 @@ public class GameManager : MonoBehaviour
     private void StopGame()
     {
         Time.timeScale = 0;
-        player.GetComponent<PlayerManager>().enabled = false;
+        player.GetComponent<CharacterController>().enabled = false;
         player.GetComponent<FirstPersonController>().enabled = false;
+        player.GetComponent<PlayerManager>().enabled = false;
+
     }
 
     private void PauseGame()
@@ -115,6 +117,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         player.GetComponent<PlayerManager>().enabled = true;
         player.GetComponent<FirstPersonController>().enabled = true;
+        player.GetComponent<CharacterController>().enabled = true;
         textPause.enabled = false;
     }
 
