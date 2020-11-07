@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public abstract class Enemy : MonoBehaviour
 {
     [SerializeField]
-    protected float attackDistance; 
+    protected float attackDistance;
     protected bool autodestruccion = false;
     [SerializeField]
     protected int damageDone;
@@ -42,12 +42,11 @@ public abstract class Enemy : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        Move();
+        Move(); 
+        
         float distance = DistanceToPlayer();
-        print("lejos");
         if (distance <= attackDistance)
         {
-            print("cerca");
             Attack();
         }
     }

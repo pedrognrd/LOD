@@ -8,6 +8,7 @@ public class Skeleton : Enemy
     private float currentSpeed;
     [SerializeField]
     private int increaseSpeed;
+    private float lastSpeed;
     [SerializeField]
     private float maxDegreeRotation;
     [SerializeField]
@@ -20,8 +21,41 @@ public class Skeleton : Enemy
 
     private void Start()
     {
-        // Calling to Rotate at start and every timeBetweenRotation
+        currentSpeed = 0;
+        lastSpeed = speed;
         InvokeRepeating("Rotate", 0, timeBetweenRotation);
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        AnimationStatus();
+    }
+
+    private void AnimationStatus()
+    {
+        // Posición del player con la Y del enemigo. Para evitar que el enemigo se incline al estar muy cerca del player
+        Vector3 target = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
+        if (DistanceToPlayer() <= attackDistance)
+        {
+            // Reducimos su velocidad
+            speed = 0;
+            // Se acerca hasta detenerse y comienza a atacar
+            animator.SetBool("Iddle", true);
+            animator.SetTrigger("AttackTrigger");
+        }
+        else {
+        }
+
+        if (DistanceToPlayer() > attackDistance)
+        {
+            // Recuperamos la velocidad inicial
+            speed = lastSpeed;
+            // Deja de atacar y comienza a andar
+            animator.ResetTrigger("AttackTrigger");
+            animator.SetBool("Iddle", false);
+        }
+
     }
 
     public override void Attack()
@@ -29,9 +63,6 @@ public class Skeleton : Enemy
         print("script skeleton " + skeletonSword.GetComponent<SkeletonSword>().canAttack);
         if (skeletonSword.GetComponent<SkeletonSword>().canAttack)
         {
-            print("script skeleton en el if " + skeletonSword.GetComponent<SkeletonSword>().canAttack);
-            print("canAttack " + skeletonSword.GetComponent<SkeletonSword>().canAttack);
-            print("collisionable " + skeletonSword.GetComponent<SkeletonSword>().collisionable);
             player.GetComponent<PlayerManager>().DamageReceived(damageDone);
         }
         //Dying(autodestruccion = false);
@@ -39,14 +70,6 @@ public class Skeleton : Enemy
 
     public override void Move()
     {
-        // Posición del player con la Y del enemigo. Para evitar que el enemigo se incline al estar muy cerca del player
-        Vector3 target = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
-
-        if (DistanceToPlayer() <= followingDistance)
-        {
-            transform.LookAt(target);
-            //currentSpeed = speed * increaseSpeed;
-        }
         transform.Translate(Vector3.forward * Time.deltaTime * speed);
     }
 
