@@ -44,8 +44,10 @@ public abstract class Enemy : MonoBehaviour
     {
         Move();
         float distance = DistanceToPlayer();
+        print("lejos");
         if (distance <= attackDistance)
         {
+            print("cerca");
             Attack();
         }
     }
@@ -78,9 +80,6 @@ public abstract class Enemy : MonoBehaviour
 
     protected float DistanceToPlayer()
     {
-        // transform.position --> posición del enemigo
-        // --> posición del player
-        // Calcular distancia
         Vector3 vDistance = player.transform.position - transform.position;
         float distance = vDistance.magnitude;
         return distance;

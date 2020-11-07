@@ -67,7 +67,7 @@ public class PlayerManager : MonoBehaviour
             GameManager.hasKey = true;
         }*/
 
-        print(other.gameObject.tag);
+        //print(other.gameObject.tag);
         if (other.gameObject.CompareTag("Charger"))
         {
             int nc = other.gameObject.GetComponentInParent<GenericCharger>().numberChargers;
@@ -118,10 +118,6 @@ public class PlayerManager : MonoBehaviour
     private void UpdateHealthBarAndBloodCanvas()
     {
         healthBar.GetComponent<Image>().fillAmount = health / ((float)maxHealth);
-
-        /*Color colorBlood = bloodImage.color;
-        colorBlood.a = 1 - (health / ((float)maxHealth));
-        bloodImage.color = colorBlood;*/
     }
 
     public void ActivateWeapon(int idArma)
@@ -157,11 +153,29 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public bool HealthAtMin()
+    {
+        if (health >= 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     public void HealthRecovery(int incHealth)
     {
         health += incHealth;
         // Con esto controlamos que la salud no crezca por encima de maxHealth
         health = Mathf.Min(health, maxHealth);
         UpdateHealthBarAndBloodCanvas();
+    }
+
+    public void HealthReduction(int decHealth)
+    {
+        health -= decHealth;
+        UpdateHealthBarAndBloodCanvas();
+        if (health <= 0) { Dying(); }
     }
 }

@@ -17,7 +17,7 @@ public class PowerSphere : MonoBehaviour
     {
         if (other.gameObject.name == "Player")
         {
-            StartCoroutine("CargarSalud");
+            StartCoroutine("ChargeHealth");
         }
     }
 
@@ -29,7 +29,7 @@ public class PowerSphere : MonoBehaviour
         }
     }
 
-    IEnumerator CargarSalud()
+    IEnumerator ChargeHealth()
     {
         //while(true)
         while (!pm.HealthAtMax())
