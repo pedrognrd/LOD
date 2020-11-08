@@ -13,7 +13,7 @@ public class SkeletonSword : MonoBehaviour
         if (collisionable) {
             collisionable = false;
             canAttack = true;
-            Invoke("StopAttack", 0.02f);
+            Invoke("StopAttack", 0.08f);
             Invoke("ReactivarColision", 2);
         }
     }

@@ -61,7 +61,6 @@ public abstract class Enemy : MonoBehaviour
         GetComponent<AudioSource>().PlayOneShot(painSound);
         health = health - danno;
         healthSlider.value = healthSlider.maxValue - health;
-
         if (health <= 0)
         {
             Dying(autodestruccion = true);

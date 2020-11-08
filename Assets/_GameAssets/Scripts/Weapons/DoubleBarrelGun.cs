@@ -42,11 +42,11 @@ public class DoubleBarrelGun : Weapon
             // Enra si choca contra algo
             if (hit.transform.gameObject.CompareTag("Enemy"))
             {
+                print("hit  " + hit);
                 hit.transform.gameObject.GetComponentInParent<Enemy>().DamageReceived(damageDone);
             }
+            CurrentShells();
         }
-
-        CurrentShells();
     }
 
     public void CurrentShells()

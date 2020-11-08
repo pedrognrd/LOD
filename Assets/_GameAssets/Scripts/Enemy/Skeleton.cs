@@ -18,7 +18,6 @@ public class Skeleton : Enemy
     [SerializeField]
     GameObject skeletonSword;
 
-
     private void Start()
     {
         currentSpeed = 0;
@@ -41,10 +40,7 @@ public class Skeleton : Enemy
             // Reducimos su velocidad
             speed = 0;
             // Se acerca hasta detenerse y comienza a atacar
-            animator.SetBool("Iddle", true);
-            animator.SetTrigger("AttackTrigger");
-        }
-        else {
+            animator.SetBool("Attack", true);
         }
 
         if (DistanceToPlayer() > attackDistance)
@@ -52,24 +48,26 @@ public class Skeleton : Enemy
             // Recuperamos la velocidad inicial
             speed = lastSpeed;
             // Deja de atacar y comienza a andar
-            animator.ResetTrigger("AttackTrigger");
-            animator.SetBool("Iddle", false);
+            animator.SetBool("Attack", false);
         }
 
     }
 
     public override void Attack()
     {
-        print("script skeleton " + skeletonSword.GetComponent<SkeletonSword>().canAttack);
         if (skeletonSword.GetComponent<SkeletonSword>().canAttack)
         {
             player.GetComponent<PlayerManager>().DamageReceived(damageDone);
         }
-        //Dying(autodestruccion = false);
     }
 
     public override void Move()
     {
+        Vector3 target = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
+        if (DistanceToPlayer() <= attackDistance)
+        {
+            transform.LookAt(target);
+        }
         transform.Translate(Vector3.forward * Time.deltaTime * speed);
     }
 

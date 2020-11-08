@@ -1917,14 +1917,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f628b3c7c4d612246ac450a7c2c9b9f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDistance: 4
+  attackDistance: 2
   damageDone: 20
   explosionSound: {fileID: 8300000, guid: a9646a6173bb6ad4b951ea60adaaa407, type: 3}
   followingDistance: 0
   health: 50
   healthSlider: {fileID: 2779391186663227112}
-  painSound: {fileID: 0}
-  points: 0
+  painSound: {fileID: 8300000, guid: d0dd5a8e1fcf88c4c990c0c54c58a2ea, type: 3}
+  points: 20
   prefabBlood: {fileID: 100000, guid: bc98890f6028f444eaa7789bde5e2eeb, type: 3}
   prefabHit: {fileID: 0}
   prefabExplosion: {fileID: 100004, guid: 7867af58a6ec48846ae807eb4022fbaa, type: 3}
