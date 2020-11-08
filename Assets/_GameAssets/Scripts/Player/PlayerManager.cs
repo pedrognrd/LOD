@@ -9,30 +9,33 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private string name;
     [SerializeField]
-    private int health;
-    [SerializeField]
-    private int maxHealth;
-    [SerializeField]
-    private GameObject[] weapons;
-    [SerializeField]
-    private int score;
-    [SerializeField]
-    private bool shield;
-    [SerializeField]
-    GameObject healthBar;
+    private int activeIconWeapon = 0;
     [SerializeField]
     private int activeWeapon = 0;
     [SerializeField]
+    private Image bloodImage;
+    [SerializeField]
+    private GameObject door;
+    [SerializeField]
+    private int health;
+    [SerializeField]
+    GameObject healthBar;
+    [SerializeField]
+    private GameObject[] IconWeapons;    
+    [SerializeField]
+    private int maxHealth;
+    [SerializeField]
+    private AudioClip openTheDoor;
+    [SerializeField]
+    GameObject panelMenu;
+    [SerializeField]
+    private int score;
+    [SerializeField]
+    private bool shield;     
+    [SerializeField]
     public Text textChargers;
     [SerializeField]
-    private GameObject[] IconWeapons;
-    [SerializeField]
-    private int activeIconWeapon = 0;
-    [SerializeField]
-    private Image bloodImage;
-    [SerializeField] 
-    GameObject panelMenu;
-
+    private GameObject[] weapons;
     private static PlayerManager _instance;
 
     private void Awake()
@@ -53,6 +56,11 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+
+        }
+
         ChooseWeapon();
         Shoot();
         Recharge();
@@ -60,14 +68,15 @@ public class PlayerManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        /*if (other.gameObject.CompareTag("Key"))
+        if (other.gameObject.CompareTag("Key"))
         {
             Destroy(other.gameObject);
             GameObject.Find("ImageKey").GetComponent<Image>().color = Color.yellow;
             GameManager.hasKey = true;
-        }*/
+            GameObject.Find("Door").GetComponent<Animator>().enabled = true;
+            door.GetComponent<AudioSource>().PlayOneShot(openTheDoor);
+        }
 
-        //print(other.gameObject.tag);
         if (other.gameObject.CompareTag("Charger"))
         {
             int nc = other.gameObject.GetComponentInParent<GenericCharger>().numberChargers;

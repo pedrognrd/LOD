@@ -94,15 +94,6 @@ public class GameManager : MonoBehaviour
         Cursor.visible = true;
     }
 
-    private void StopGame()
-    {
-        Time.timeScale = 0;
-        player.GetComponent<CharacterController>().enabled = false;
-        player.GetComponent<FirstPersonController>().enabled = false;
-        player.GetComponent<PlayerManager>().enabled = false;
-
-    }
-
     private void PauseGame()
     {
         state = State.Paused;
@@ -110,7 +101,13 @@ public class GameManager : MonoBehaviour
         textPause.enabled = true;
     }
 
-
+    private void StopGame()
+    {
+        Time.timeScale = 0;
+        player.GetComponent<CharacterController>().enabled = false;
+        player.GetComponent<FirstPersonController>().enabled = false;
+        player.GetComponent<PlayerManager>().enabled = false;
+    }
     private void UnpauseGame()
     {
         state = State.Playing;
