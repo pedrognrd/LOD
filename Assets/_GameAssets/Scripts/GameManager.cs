@@ -8,22 +8,19 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class GameManager : MonoBehaviour
 {
     private GameObject player;
+
     [SerializeField]
-    private GameObject textScore;
-    //public enum Estado { Jugando, EnInventario, EnMenu, GameOver, Finalizacion }
+    private GameObject endPanel;
+    public static bool hasKey = false;
+    [SerializeField]
+    private GameObject panelMenu;
+    private static int score = 0;
     public enum State { Playing, Paused, GameOver }
     private static State state = State.Playing;
-
-    private int score = 0;
-    public int Scxore { get => score; set => score = value; }
-
     [SerializeField]
     private Text textPause;
     [SerializeField]
-    private GameObject panelMenu;
-
-    // Al ser public y static, podemos acceder desde cualquier sitio
-    public static bool hasKey = false;
+    private GameObject textScore;
 
     private static GameManager _instance;
 
@@ -56,6 +53,10 @@ public class GameManager : MonoBehaviour
             panelMenu = GameObject.Find("PanelMenu");
             panelMenu.SetActive(false);
         }
+        if (player == null)
+        {
+            player = GameObject.Find("Player");
+        }
 
         if (Input.GetKeyDown(KeyCode.P))
         {
@@ -70,12 +71,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public static void CargarEscena(string nombreEscena) 
-    {
-        SceneManager.LoadScene(nombreEscena);
-    }
-
-    public void DoGameOver() 
+    public void DoGameOver()
     {
         /*
          *  - Paramos todo
@@ -94,6 +90,35 @@ public class GameManager : MonoBehaviour
         Cursor.visible = true;
     }
 
+    public void EndPanel()
+    {
+        /*
+         *  - Paramos todo
+         *  - Mostramos Game Over
+         *  - Menu (Restar | Menu | load)
+        */
+
+        // Cambiamos el estado
+        state = State.GameOver;
+        // Poner time scale en 0 y desactivar scripts del player
+        StopGame();
+        // Activar el menú EndPanel
+        endPanel.SetActive(true);
+        // Desbloqueamos el cursor del ratón
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+    public static void LoadMyScene(string nombreEscena)
+    {
+        SceneManager.LoadScene(nombreEscena);
+    }
+
+    public static void LoadScene(string nombreEscena) 
+    {
+        SceneManager.LoadScene(nombreEscena);
+    }
+
+    
     private void PauseGame()
     {
         state = State.Paused;
@@ -122,5 +147,6 @@ public class GameManager : MonoBehaviour
     {
         score = score + puntos;
         textScore.GetComponent<Text>().text = score.ToString();
-    }
+        player.GetComponent<PlayerManager>().score = score;
+    }    
 }

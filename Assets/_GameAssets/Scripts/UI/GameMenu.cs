@@ -7,13 +7,13 @@ public class GameMenu : MonoBehaviour
 {
     // TODO Tal vez hay que destruir el sound manager también.
     string[] objectsToDestroy = { "CanvasHUD", "GameManager", "Player" };
-    public void RecargarEscena() 
+    public void ReloadScene() 
     {
         DestroyObjects();
         SceneManager.LoadScene("Scene1");
     }
 
-    public void RecargarMenu()
+    public void ReloadMenu()
     {
         DestroyObjects();
         SceneManager.LoadScene("IntroScene");

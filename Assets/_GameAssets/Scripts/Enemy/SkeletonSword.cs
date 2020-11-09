@@ -14,7 +14,7 @@ public class SkeletonSword : MonoBehaviour
             collisionable = false;
             canAttack = true;
             Invoke("StopAttack", 0.08f);
-            Invoke("ReactivarColision", 2);
+            Invoke("ReactivarColision", 1);
         }
     }
 

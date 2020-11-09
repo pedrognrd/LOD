@@ -15,10 +15,13 @@ public class PlayerSpawner : MonoBehaviour
         player.transform.position = transform.position;
         player.transform.rotation = transform.rotation;
         player.GetComponent<FirstPersonController>().enabled = false;
+        player.GetComponent<CharacterController>().enabled = false;
+        
     }
 
     private void LateUpdate()
     {
         player.GetComponent<FirstPersonController>().enabled = true;
+        player.GetComponent<CharacterController>().enabled = true;
     }
 }

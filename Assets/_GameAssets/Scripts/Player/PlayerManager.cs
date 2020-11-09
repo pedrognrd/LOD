@@ -7,7 +7,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField]
-    private string name;
+    private string playerName;
     [SerializeField]
     private int activeIconWeapon = 0;
     [SerializeField]
@@ -16,6 +16,8 @@ public class PlayerManager : MonoBehaviour
     private Image bloodImage;
     [SerializeField]
     private GameObject door;
+    [SerializeField]
+    private GameObject doorInside;
     [SerializeField]
     private int health;
     [SerializeField]
@@ -29,7 +31,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     GameObject panelMenu;
     [SerializeField]
-    private int score;
+    public int score;
     [SerializeField]
     private bool shield;     
     [SerializeField]
@@ -51,16 +53,12 @@ public class PlayerManager : MonoBehaviour
         }
 
         health = maxHealth;
+        doorInside.SetActive(false);
         ActivateWeapon(activeWeapon);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-
-        }
-
         ChooseWeapon();
         Shoot();
         Recharge();
@@ -68,6 +66,13 @@ public class PlayerManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.CompareTag("Charger"))
+        {
+            int nc = other.gameObject.GetComponentInParent<GenericCharger>().numberChargers;
+            weapons[activeWeapon].GetComponent<Weapon>().AddChargers(nc);
+            Destroy(other.gameObject);
+        }
+
         if (other.gameObject.CompareTag("Key"))
         {
             Destroy(other.gameObject);
@@ -75,63 +80,18 @@ public class PlayerManager : MonoBehaviour
             GameManager.hasKey = true;
             GameObject.Find("Door").GetComponent<Animator>().enabled = true;
             door.GetComponent<AudioSource>().PlayOneShot(openTheDoor);
+            doorInside.SetActive(true);
         }
-
-        if (other.gameObject.CompareTag("Charger"))
+        if (other.gameObject.CompareTag("Necronomicon"))
         {
-            int nc = other.gameObject.GetComponentInParent<GenericCharger>().numberChargers;
-            weapons[activeWeapon].GetComponent<Weapon>().AddChargers(nc);
-            Destroy(other.gameObject);
+            GameObject.Find("GameManager").GetComponent<GameManager>().EndPanel();
         }
-    }
-
-    public void ChooseWeapon() {
-        for (int i = 0; i <= weapons.Length; i++)
-        {
-            if (Input.GetKeyDown(i.ToString()))
-            {
-                ActivateWeapon(i - 1);
-            }
-        }
-    }
-
-    public void Shoot()
-    {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            weapons[activeWeapon].GetComponent<Weapon>().TryShoot();
-        }
-    }
-
-    public void Recharge() 
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            weapons[activeWeapon].GetComponent<Weapon>().Reload();
-        }
-    }
-
-    public void Dying()
-    {
-        panelMenu.SetActive(true);
-        GameObject.Find("GameManager").GetComponent<GameManager>().DoGameOver();
-    }
-
-    public void DamageReceived(int danno)
-    {
-        health = health - danno;
-        UpdateHealthBarAndBloodCanvas();
-        if (health <= 0) { Dying(); }
-    }
-
-    private void UpdateHealthBarAndBloodCanvas()
-    {
-        healthBar.GetComponent<Image>().fillAmount = health / ((float)maxHealth);
     }
 
     public void ActivateWeapon(int idArma)
     {
-        for (int i=0; i<weapons.Length; i++) {
+        for (int i = 0; i < weapons.Length; i++)
+        {
             if (i == idArma)
             {
                 weapons[i].SetActive(true);
@@ -145,19 +105,45 @@ public class PlayerManager : MonoBehaviour
                 textChargers.text = "x" + chargers.ToString();
                 //TextAmmo.text = bullets.ToString();
             }
-            else {
+            else
+            {
                 weapons[i].SetActive(false);
                 IconWeapons[i].SetActive(false);
-            } 
+            }
         }
     }
 
-    public bool HealthAtMax() {
+    public void ChooseWeapon() {
+        for (int i = 0; i <= weapons.Length; i++)
+        {
+            if (Input.GetKeyDown(i.ToString()))
+            {
+                ActivateWeapon(i - 1);
+            }
+        }
+    }
+
+    public void DamageReceived(int danno)
+    {
+        health = health - danno;
+        UpdateHealthBarAndBloodCanvas();
+        if (health <= 0) { Dying(); }
+    }
+
+    public void Dying()
+    {
+        panelMenu.SetActive(true);
+        GameObject.Find("GameManager").GetComponent<GameManager>().DoGameOver();
+    }
+
+    public bool HealthAtMax()
+    {
         if (health >= maxHealth)
         {
             return true;
         }
-        else {
+        else
+        {
             return false;
         }
     }
@@ -187,4 +173,27 @@ public class PlayerManager : MonoBehaviour
         UpdateHealthBarAndBloodCanvas();
         if (health <= 0) { Dying(); }
     }
+
+    public void Recharge()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            weapons[activeWeapon].GetComponent<Weapon>().Reload();
+        }
+    }
+    
+    public void Shoot()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            weapons[activeWeapon].GetComponent<Weapon>().TryShoot();
+        }
+    }
+
+    
+    private void UpdateHealthBarAndBloodCanvas()
+    {
+        healthBar.GetComponent<Image>().fillAmount = health / ((float)maxHealth);
+    }
+    
 }

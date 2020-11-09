@@ -14,7 +14,7 @@ public class Teletransporte : MonoBehaviour
             // Evaluar que el Player tiene la llave
             if (GameManager.hasKey == true)
             {
-                GameManager.CargarEscena(sceneName);
+                GameManager.LoadScene(sceneName);
             }
             else { 
                 // Mostrar un texto y tal vez un audio para avisar al player
