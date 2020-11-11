@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_GameAssets/Scenes/InteriorScene.unity
     guid: 390c8a9d2472c3045a5875ffffe90bfe
+  - enabled: 1
+    path: Assets/_GameAssets/Scenes/SentenceScene.unity
+    guid: 427977fc9e687934fbf22c792a454e50
+  - enabled: 1
+    path: Assets/_GameAssets/Scenes/FinishScene.unity
+    guid: 41840e13489a29149a2c8575ccf1c465
   m_configObjects: {}

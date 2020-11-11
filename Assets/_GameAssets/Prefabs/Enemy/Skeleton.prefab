@@ -1924,6 +1924,7 @@ MonoBehaviour:
   health: 50
   healthSlider: {fileID: 2779391186663227112}
   painSound: {fileID: 8300000, guid: d0dd5a8e1fcf88c4c990c0c54c58a2ea, type: 3}
+  player: {fileID: 0}
   points: 20
   prefabBlood: {fileID: 100000, guid: bc98890f6028f444eaa7789bde5e2eeb, type: 3}
   prefabHit: {fileID: 0}

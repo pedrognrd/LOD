@@ -12,6 +12,8 @@ TagManager:
   - Fire
   - Key
   - Necronomicon
+  - Door
+  - EndPanel
   layers:
   - Default
   - TransparentFX
