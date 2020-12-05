@@ -26,7 +26,7 @@ Como parte de las acciones formativas del Servicio Público de Empleo Estatal (S
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Legion of Darkness. Project that pays tribute to the movie Army of Darkness or The Army of Darkness (Sam Raimi, 1992).
+Legion of Darkness. The project pays tribute to the movie Army of Darkness or The Army of Darkness (Sam Raimi, 1992).
 
 Made using free assets from Unity's Assets Store.
 
