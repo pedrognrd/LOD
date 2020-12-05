@@ -40,7 +40,7 @@ The development of the project includes:
 - Creation and interaction of scenes
 - Audio editing and treatment
 
-Ash images taken from the character study by Barnaby Bagenda: https://twitter.com/modelsheets/status/609065319076917248
+Ash images are taken from the character study by Barnaby Bagenda: https://twitter.com/modelsheets/status/609065319076917248
 Main scene image taken from the poster made by John Bolton: https://www.dynamite.com/htmlfiles/viewProduct.html?PRO=C105208
 Final scene image taken from the poster made by Anthony Genuardi: https://alternativemovieposters.com/amp/army-darkness-anthony-genuardi/
 
